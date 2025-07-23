@@ -55,7 +55,7 @@ def get_travel_guidance(user_message: str, messages: list = None) -> tuple[str, 
             temperature=0.1
         )
         
-        # Fallback response in case of no content
+        # Fallback response in case of no content (likely hit domain refusal or rate limit)
         assistant_response = "No response received from the AI service."
 
         # Extract text from response
@@ -72,6 +72,8 @@ def get_travel_guidance(user_message: str, messages: list = None) -> tuple[str, 
         
     except Exception as e:
         error_msg = f"Error getting travel guidance: {str(e)}"
+        # Return error message and empty conversation history
+        return error_msg, [{"role": "system", "content": SYSTEM_MESSAGE}]
 
 # Test function (remove in production)
 def test_service():
