@@ -132,3 +132,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django Ninja specific settings
+NINJA_PAGINATION_CLASS = 'ninja.pagination.PageNumberPagination'
+NINJA_PAGINATION_PER_PAGE = 20
+NINJA_MAX_PER_PAGE_SIZE = 100
+NINJA_PAGINATION_MAX_LIMIT = 100
+NINJA_NUM_PROXIES = 0
+NINJA_DEFAULT_THROTTLE_RATES = {}
+NINJA_FIX_REQUEST_FILES_METHODS = {'POST', 'PUT', 'PATCH'}
