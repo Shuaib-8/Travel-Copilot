@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "travel_copilot"
+version = "0.1.0"
+description = "Django REST Framework travel application with AI-powered travel guidance"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "Shuaib Ahmed" }
+]
+
+# Core dependencies for the application
+dependencies = [
+    "Django>=5.1.2",
+    "django-ninja>=1.3.0",
+    "cohere>=0.7.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.1.0",
+    "uv>=0.1.0",
+    "pytest>=7.0",
+    "pytest-django>=4.5",
+    "pytest-cov>=4.0",
+    "ipykernel>=6.0",
+]
+
+[tool.setuptools]
+# Map root package directory to core/ to keep artifacts there
+package-dir = {"" = "core"}
+# Include the top-level llm_service module that re-exports from core
+py-modules = ["llm_service"]
+
+[tool.setuptools.packages.find]
+# Find packages in the core directory
+where = ["core"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
