@@ -12,14 +12,21 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <header class="bg-blue-600 text-white shadow-lg">
-        <div class="container mx-auto px-4">
+    <header class="bg-blue-600 text-white shadow-lg relative">
+        <div class="container mx-auto px-4 overflow-visible">
             <div class="flex items-center justify-between h-16">
-                <h1 class="text-xl font-bold">Travel Guidance</h1>
+                <h1 class="text-xl font-bold"><a href="{% url 'travel-guidance' %}">Travel Guidance Copilot</a></h1>
                 <nav>
                     <ul class="flex space-x-4">
-                        <li><a href="{% url 'travel-guidance' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition-colors">Home</a></li>
-                        <li><a href="{% url 'travel-guidance' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition-colors">Travel Guidance</a></li>
+                        <!-- Add a tooltip message when hovering over restart -->
+                        <li class="relative group">
+                            <a href="{% url 'travel-guidance' %}" class="hover:bg-red-600 px-3 py-2 rounded">
+                                Restart
+                                <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-600 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-50">
+                                    Start over with a new question
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
