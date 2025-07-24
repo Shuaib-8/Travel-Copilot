@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Travel Guidance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Travel Copilot</h1>
+    <p>Get personalized travel guidance and recommendations.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="user_message" class="form-label">Your Travel Question:</label>
+            <textarea id="user_message" name="user_message" rows="3" 
+                      placeholder="Ask me anything about travel planning..."></textarea>
+        </div>
+        <button type="submit">Get Guidance</button>
+    </form>
+    
+    {% if response %}
+    <div>
+        <h3>AI Travel Assistant Response:</h3>
+        <div>{{ response }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
