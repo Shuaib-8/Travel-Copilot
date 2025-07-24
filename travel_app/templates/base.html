@@ -2,22 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Travel Guidance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Guidance Copilot</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
-    <header>
-        <h1>Travel Guidance</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'travel-guidance' %}">Home</a></li>
-                <li><a href="{% url 'travel-guidance' %}">Travel Guidance</a></li>
-            </ul>
-        </nav>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-blue-600 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl font-bold">Travel Guidance</h1>
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a href="{% url 'travel-guidance' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition-colors">Home</a></li>
+                        <li><a href="{% url 'travel-guidance' %}" class="hover:bg-blue-700 px-3 py-2 rounded transition-colors">Travel Guidance</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
-    <main>
+    
+    <main class="container mx-auto px-4 py-8">
         {% block content %}
-        <h2>Welcome to the Travel Guidance App</h2>
-        <p>Get personalized travel advice and recommendations.</p>
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to the Travel Guidance App</h2>
+            <p class="text-gray-600">Get personalized travel advice and recommendations.</p>
+        </div>
         {% endblock %}
     </main>
 </body>
