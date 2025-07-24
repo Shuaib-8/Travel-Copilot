@@ -45,7 +45,7 @@ def get_travel_guidance(user_message: str, messages: list = None) -> tuple[str, 
         else:
             conversation_messages = messages.copy()
         
-        # Add new user message
+        # Add new user message to conversation history
         conversation_messages.append({"role": "user", "content": user_message})
         
         # Use the chat method with conversation history
@@ -59,10 +59,10 @@ def get_travel_guidance(user_message: str, messages: list = None) -> tuple[str, 
         assistant_response = "No response received from the AI service."
 
         # Extract text from response
-        if hasattr(response, 'message') and hasattr(response.message, 'content'):
+        if hasattr(response.message, 'content'):
             content = response.message.content
             if isinstance(content, list) and len(content) > 0:
-                content_obj = content[0]
+                content_obj = content[0] # object is a single item in the list
                 if hasattr(content_obj, 'text'):
                     assistant_response = content_obj.text.strip()
         
