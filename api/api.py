@@ -20,7 +20,7 @@ class TravelGuidanceResponse(Schema):
 api = NinjaAPI(
     title="Travel Copilot API",
     version="1.0.0",
-    description="API for travel planning co-pilot assistance",
+    description="API for travel planning co-pilot assistance"
 )
 
 # Register the travel guidance endpoint - singleton for LLM service
