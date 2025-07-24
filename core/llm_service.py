@@ -3,10 +3,14 @@ from dotenv import load_dotenv
 from cohere import ClientV2
 from pathlib import Path
 
-# Load environment variables from .env file (local development)
+# Load environment variables from .env file (local development only)
+# In production/Docker, environment variables should be set directly
 BASE_DIR = Path(__file__).resolve().parent.parent
 env_path = BASE_DIR / '.env'
-load_dotenv(dotenv_path=env_path)
+
+# Only load .env file if it exists and we're not in a containerized environment
+if env_path.exists() and not os.getenv('DOCKER_CONTAINER'):
+    load_dotenv(dotenv_path=env_path)
 
 COHERE_API_KEY = os.getenv('COHERE_API_KEY')
 
