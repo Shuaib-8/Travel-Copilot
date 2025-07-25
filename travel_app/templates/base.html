@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Guidance Copilot</title>
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Local TailwindCSS -->
+    <link href="{% static 'dist/tailwind.css' %}" rel="stylesheet">
+    <!-- Local HTMX -->
+    <script type="text/javascript" src="{% static 'htmx/htmx.min.js' %}"></script>
+    <!-- Local Alpine.js -->
+    <script type="text/javascript" src="{% static 'alpinejs/alpine.min.js' %}"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <header class="bg-blue-600 text-white shadow-lg relative">
