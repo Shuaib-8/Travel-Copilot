@@ -62,7 +62,12 @@ class TestTravelGuidanceAPI:
         assert "messages" in response_data
         assert response_data["response"] == "Here are some great places to visit in Paris: Eiffel Tower, Louvre Museum, Notre-Dame Cathedral..."
         assert len(response_data["messages"]) == 3  # system + user + assistant
-    
+
+        # Verify the mock was called with the correct parameters
+        mock_llm_service_success.assert_called_once_with(
+            request_data["user_message"], 
+            request_data["messages"]
+        )
     
     def test_travel_guidance_endpoint_invalid_json(self, client):
         """Test travel guidance endpoint with invalid JSON."""
