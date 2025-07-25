@@ -1,27 +1,79 @@
 {% extends 'base.html' %}
 
-{% block title %}Travel Guidance{% endblock %}
-
 {% block content %}
-<div class="container mt-4">
-    <h1>Travel Copilot</h1>
-    <p>Get personalized travel guidance and recommendations.</p>
-    
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <label for="user_message" class="form-label">Your Travel Question:</label>
-            <textarea id="user_message" name="user_message" rows="3" 
-                      placeholder="Ask me anything about travel planning..."></textarea>
+<!-- Full-screen chat layout -->
+<div class="fixed inset-0 flex flex-col bg-gray-100" x-data="{ userMessage: '' }" style="top: 64px;">
+    <!-- Chat Messages Area -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-4" id="chat-messages">
+        <!-- Messages will be populated here -->
+        {% if response %}
+        <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 max-w-4xl mx-auto">
+            <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-900 mb-3 text-lg">AI Travel Assistant:</h3>
+                    <div class="text-gray-700 leading-relaxed text-base">{{ response }}</div>
+                </div>
+            </div>
         </div>
-        <button type="submit">Get Guidance</button>
-    </form>
-    
-    {% if response %}
-    <div>
-        <h3>AI Travel Assistant Response:</h3>
-        <div>{{ response }}</div>
+        {% endif %}
     </div>
-    {% endif %}
+    
+    <!-- Bottom Input Container - Fixed to bottom with centered content -->
+    <div class="bg-white border-t-4 border-gray-300 shadow-2xl" style="position: fixed; bottom: 0; left: 0; right: 0; padding: 1.5rem;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <form method="post" 
+                  hx-post="{% url 'travel-guidance' %}"
+                  hx-target="#chat-messages"
+                  hx-swap="beforeend"
+                  hx-on::after-request="if(event.detail.successful) userMessage = ''"
+                  style="display: flex; width: 100%;">
+                {% csrf_token %}
+                
+                <!-- Input Field Container with Button Inside -->
+                <div style="position: relative; width: 100%;">
+                    <textarea 
+                        name="user_message"
+                        x-model="userMessage"
+                        placeholder="Enter Text to Travel bot ..."
+                        class="w-full px-6 py-4 text-lg font-medium rounded-3xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 bg-white hover:border-gray-400 transition-all duration-200 shadow-sm placeholder-gray-500 resize-none"
+                        required
+                        rows="1"
+                        x-ref="textarea"
+                        @input="
+                            $refs.textarea.style.height = 'auto';
+                            $refs.textarea.style.height = Math.min($refs.textarea.scrollHeight, 150) + 'px';
+                        "
+                        @keydown.enter.prevent="
+                            if (!$event.shiftKey) {
+                                $el.closest('form').requestSubmit();
+                            } else {
+                                $refs.textarea.style.height = 'auto';
+                                $refs.textarea.style.height = Math.min($refs.textarea.scrollHeight, 150) + 'px';
+                            }
+                        "
+                        style="padding-left: 60px; padding-right: 60px; min-height: 56px; max-height: 150px; font-size: 16px; width: 100%; line-height: 1.5; overflow-y: auto;"
+                    ></textarea>
+                    
+                    <!-- Arrow Submit Button - Inside the input field -->
+                    <button 
+                        type="submit"
+                        class="absolute hover:bg-blue-700 disabled:opacity-30 transition-all duration-200 flex items-center justify-center"
+                        :disabled="!userMessage.trim()"
+                        :class="{ 'cursor-not-allowed': !userMessage.trim() }"
+                        style="right: 10px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; min-width: 40px; min-height: 40px; background: #3b82f6; border: none; border-radius: 50%; padding: 0; display: flex; align-items: center; justify-content: center;"
+                    >
+                        <svg style="width: 16px; height: 16px; margin-left: 1px;" fill="white" stroke="none" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
