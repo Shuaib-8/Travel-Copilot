@@ -43,3 +43,9 @@ where = ["core"]
 [tool.ruff]
 target-version = "py313"
 line-length = 88
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "travel_copilot.settings"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+addopts = "--tb=short --strict-markers"
+testpaths = ["tests"]
