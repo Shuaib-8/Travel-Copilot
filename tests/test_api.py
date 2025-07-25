@@ -1,8 +1,6 @@
 import pytest
 import json
 from unittest.mock import patch, Mock
-
-# Import after Django setup to avoid settings errors
 from api.api import api, TravelGuidanceRequest, TravelGuidanceResponse 
 
 

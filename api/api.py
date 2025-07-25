@@ -5,7 +5,7 @@ This file configures all API endpoints and routes.
 
 from typing import List, Optional
 from ninja import NinjaAPI, Schema
-from core.llm_service import get_travel_guidance
+from core import llm_service
 
 # Define request schema for travel guidance
 class TravelGuidanceRequest(Schema):
@@ -36,7 +36,7 @@ def travel_guidance(request, data: TravelGuidanceRequest):
         TravelGuidanceResponse: AI response and updated message history.
     """
     try:
-        response, updated_messages = get_travel_guidance(data.user_message, data.messages)
+        response, updated_messages = llm_service.get_travel_guidance(data.user_message, data.messages)
         return TravelGuidanceResponse(response=response, messages=updated_messages)
     except Exception as e:
         # Handle any unexpected errors

@@ -1,9 +1,5 @@
 import pytest
-import os
-from unittest.mock import Mock, patch
-from django.test import Client
-from django.contrib.auth import get_user_model
-from django.conf import settings
+from unittest.mock import patch
 from core.llm_service import SYSTEM_MESSAGE
 
 
@@ -36,13 +32,10 @@ def sample_llm_response():
 @pytest.fixture
 def mock_llm_service_success(sample_llm_response):
     """Mock LLM service to return successful response."""
-    # Patch at both locations - the core module and the API module that imports it
-    with patch('core.llm_service.get_travel_guidance') as mock_service1, \
-         patch('api.api.get_travel_guidance') as mock_service2:
-        
+    with patch('core.llm_service.get_travel_guidance') as mock_service:
+
         response_data = sample_llm_response
-        mock_service1.return_value = response_data
-        mock_service2.return_value = response_data
+        mock_service.return_value = response_data
         
         # Return the API-level mock since that's what the API tests will check
-        yield mock_service2
+        yield mock_service
