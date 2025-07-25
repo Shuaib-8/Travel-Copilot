@@ -1,0 +1,21 @@
+{
+  "name": "travel-copilot",
+  "version": "1.0.0",
+  "description": "Travel Copilot Django App",
+  "scripts": {
+    "tailwind:dev": "npx tailwindcss -i ./static/src/input.css -o ./static/dist/tailwind.css --watch",
+    "tailwind:build": "npx tailwindcss -i ./static/src/input.css -o ./static/dist/tailwind.css --minify",
+    "build:htmx": "cp node_modules/htmx.org/dist/htmx.min.js static/htmx/htmx.min.js",
+    "build:alpine": "cp node_modules/alpinejs/dist/cdn.min.js static/alpinejs/alpine.min.js",
+    "build": "npm run tailwind:build && npm run build:htmx && npm run build:alpine",
+    "dev": "npm run build && python manage.py collectstatic --noinput && python manage.py runserver",
+    "setup": "npm install && npm run build && python manage.py collectstatic --noinput"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.9",
+    "htmx.org": "^2.0.4"
+  }
+}
