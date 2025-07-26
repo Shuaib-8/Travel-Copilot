@@ -21,7 +21,7 @@
                     <ul class="flex space-x-4">
                         <!-- Add a tooltip message when hovering over restart -->
                         <li class="relative group">
-                            <a href="{% url 'travel-guidance' %}" class="hover:bg-red-600 px-3 py-2 rounded">
+                            <a href="{% url 'travel-guidance' %}?restart=true" class="hover:bg-red-600 px-3 py-2 rounded">
                                 Restart
                                 <span class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-600 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-50">
                                     Start over with a new question
