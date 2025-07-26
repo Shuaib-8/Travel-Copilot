@@ -10,41 +10,41 @@
             <div class="flex-1 overflow-y-auto p-4" id="chat-messages" style="max-height: 100%; overflow-x: hidden;">
                 <!-- Chat Container for all conversations -->
                 <div class="max-w-4xl mx-auto space-y-4">
-                    <!-- Initial response if exists -->
-                    {% if response %}
-                    <!-- User Request Container - Left aligned -->
-                    <div class="flex justify-start">
-                        <div class="bg-gray-50 rounded-2xl p-4 shadow-sm border border-gray-100" style="max-width: 70%; word-wrap: break-word;">
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-                                    </svg>
+                    <!-- Display conversation history if exists -->
+                    {% if conversation_history %}
+                        {% for conversation in conversation_history %}
+                        <!-- User Query Container - Left aligned -->
+                        <div style="display: flex; justify-content: flex-start; margin-bottom: 16px;">
+                            <div style="max-width: 70%; width: auto;">
+                                <!-- User query header with blue background -->
+                                <div style="background-color: #3b82f6; color: white; padding: 12px 16px; border-radius: 8px 8px 0 0; font-weight: 500; font-size: 14px;">
+                                    User Query
                                 </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-bold text-gray-900 mb-2">User request</div>
-                                    <div class="text-gray-700 leading-relaxed text-sm" style="word-break: break-word; overflow-wrap: break-word;">{{ request.POST.user_message|default:"Tell me about Paris..." }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- AI Response - Right aligned with margin -->
-                    <div class="flex justify-end">
-                        <div class="bg-gray-50 rounded-2xl p-4 shadow-sm border border-gray-100" style="max-width: 70%; max-height: 25vh; overflow-y: auto; word-wrap: break-word; margin-right: 0; margin-left: 15%;">
-                            <div class="flex items-start space-x-3">
-                                <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-gray-900 mb-2">AI Travel Assistant</div>
-                                    <div class="text-gray-700 leading-relaxed text-sm" style="word-break: break-word; overflow-wrap: break-word;">{{ response }}</div>
+                                <!-- User message content -->
+                                <div style="background-color: #dbeafe; border: 2px solid #3b82f6; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px;">
+                                    <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                                        {{ conversation.user_message }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        <!-- AI Response Container - Right aligned -->
+                        <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                            <div style="max-width: 70%; width: auto;">
+                                <!-- AI response header -->
+                                <div style="background-color: #4b5563; color: white; padding: 12px 16px; border-radius: 8px 8px 0 0; font-weight: 500; font-size: 14px;">
+                                    LLM Response
+                                </div>
+                                <!-- AI response content -->
+                                <div style="background-color: #f9fafb; border: 2px solid #4b5563; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px; max-height: 400px; overflow-y: auto;">
+                                    <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                                        {{ conversation.ai_response }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     {% else %}
                     <!-- Welcome message when no conversation exists -->
                     <div class="flex justify-center items-center" style="min-height: 200px;">
@@ -66,7 +66,11 @@
 </div>
     
     <!-- Bottom Input Container - Fixed to bottom with centered content -->
-    <div style="position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem;" x-data="{ userMessage: '' }">
+    <div style="position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem;" 
+         x-data="{ 
+             userMessage: '',
+             hasStartedConversation: {{ conversation_history|length|yesno:'true,false' }}
+         }">
         <div style="max-width: 1000px; margin: 0 auto; border-radius: 1rem; overflow: hidden;">
             <form method="post" 
                   hx-post="{% url 'travel-guidance' %}"
@@ -76,6 +80,7 @@
                     if(event.detail.successful) { 
                         userMessage = ''; 
                         $refs.textarea.style.height = '56px';
+                        hasStartedConversation = true;
                         // Scroll to bottom after AI response is added
                         setTimeout(() => {
                             const chatMessagesContainer = document.querySelector('#chat-messages');
@@ -87,30 +92,19 @@
                     const userMsg = userMessage.trim();
                     if (userMsg) {
                         const chatContainer = document.querySelector('#chat-messages .max-w-4xl');
-                        const userRequestHtml = `
-                            <div class='flex justify-start'>
-                                <div class='bg-gray-50 rounded-2xl p-4 shadow-sm border border-gray-100' style='max-width: 70%; word-wrap: break-word;'>
-                                    <div class='flex items-start space-x-3'>
-                                        <div class='flex-shrink-0 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center'>
-                                            <svg class='w-4 h-4 text-white' fill='currentColor' viewBox='0 0 20 20'>
-                                                <path d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z'/>
-                                            </svg>
-                                        </div>
-                                        <div class='flex-1 min-w-0'>
-                                            <div class='text-sm font-bold text-gray-900 mb-2'>User request</div>
-                                            <div class='text-gray-700 leading-relaxed text-sm' style='word-break: break-word; overflow-wrap: break-word;'>${userMsg}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        chatContainer.insertAdjacentHTML('beforeend', userRequestHtml);
-                        // Scroll the chat messages container, not the whole page
+                        
+                        // If this is the first message, clear the welcome message
+                        if (!hasStartedConversation) {
+                            chatContainer.innerHTML = '';
+                        }
+                        
+                        // Scroll the chat messages container
                         const chatMessagesContainer = document.querySelector('#chat-messages');
                         chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
                     }
                   "
-                  style="display: flex; width: 100%;">
+                  style="display: flex; width: 100%;"
+                  @submit="hasStartedConversation = true">
                 {% csrf_token %}
                 
                 <!-- Input Field Container with Button Inside -->
@@ -118,7 +112,7 @@
                     <textarea 
                         name="user_message"
                         x-model="userMessage"
-                        placeholder="Ask me about travel destinations..."
+                        placeholder="Enter Text to Travel bot ..."
                         class="w-full px-6 py-4 text-lg font-medium rounded-3xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 bg-white hover:border-gray-400 transition-all duration-200 shadow-sm placeholder-gray-500 resize-none"
                         required
                         rows="1"

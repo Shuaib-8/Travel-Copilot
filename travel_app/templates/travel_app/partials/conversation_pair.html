@@ -1,0 +1,31 @@
+<!-- User Query Container - Left aligned -->
+<div style="display: flex; justify-content: flex-start; margin-bottom: 16px;">
+    <div style="max-width: 70%; width: auto;">
+        <!-- User query header with blue background -->
+        <div style="background-color: #3b82f6; color: white; padding: 12px 16px; border-radius: 8px 8px 0 0; font-weight: 500; font-size: 14px;">
+            User Query
+        </div>
+        <!-- User message content -->
+        <div style="background-color: #dbeafe; border: 2px solid #3b82f6; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px;">
+            <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                {{ user_message }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Response Container - Right aligned -->
+<div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+    <div style="max-width: 70%; width: auto;">
+        <!-- AI response header -->
+        <div style="background-color: #4b5563; color: white; padding: 12px 16px; border-radius: 8px 8px 0 0; font-weight: 500; font-size: 14px;">
+            LLM Response
+        </div>
+        <!-- AI response content -->
+        <div style="background-color: #f9fafb; border: 2px solid #4b5563; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px; max-height: 400px; overflow-y: auto;">
+            <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                {{ ai_response }}
+            </div>
+        </div>
+    </div>
+</div>
