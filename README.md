@@ -1,6 +1,6 @@
 # Travel Copilot
 
-![alt text](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra%20/travel-copilot-design.png)
+![alt text](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-design.png)
 
 ## Overview
 
