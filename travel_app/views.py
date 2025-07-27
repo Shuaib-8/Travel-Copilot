@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.views import View
-from core.llm_service import get_travel_guidance
+from core.llm_service import get_travel_guidance, SYSTEM_MESSAGE
 
 
 class TravelGuidanceView(View):
@@ -13,7 +13,7 @@ class TravelGuidanceView(View):
     
     def get(self, request):
         """Handle GET requests - show the form"""
-        # Check if restart parameter is present
+        # Check if restart parameter is present - otherwise a refresh after a conversation will maintain the conversation history
         if request.GET.get('restart') == 'true':
             request.session.pop('conversation_history', None)
             
@@ -25,9 +25,20 @@ class TravelGuidanceView(View):
     def post(self, request):
         """Handle POST requests - process travel guidance"""
         user_message = request.POST.get('user_message', '')
-        messages_list = request.POST.getlist('messages')
-        # Convert empty list to None for initial conversation turn
-        messages = messages_list if messages_list else None
+        
+        # Build conversation context from session history
+        conversation_history = request.session.get('conversation_history', [])
+        messages = None
+        
+        if conversation_history:
+            # Convert session history to proper message format for LLM
+            from core.llm_service import SYSTEM_MESSAGE
+            messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
+            
+            for conversation in conversation_history:
+                messages.append({"role": "user", "content": conversation['user_message']})
+                messages.append({"role": "assistant", "content": conversation['ai_response']})
+        
         response, updated_messages = get_travel_guidance(user_message, messages)
         
         # Store conversation in session for persistence
