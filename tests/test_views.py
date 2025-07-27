@@ -1,9 +1,7 @@
 import pytest
-from django.urls import reverse
-from django.contrib.auth import get_user_model
 from django.http import HttpResponse
-from unittest.mock import patch, Mock
-from travel_app.views import TravelGuidanceView
+from unittest.mock import patch
+from core.llm_service import SYSTEM_MESSAGE
 
 
 @pytest.mark.django_db
@@ -55,6 +53,7 @@ class TestTravelGuidanceView:
         mock_service.return_value = (
             "Based on your interest in Tokyo, I also recommend visiting Kyoto for its temples.",
             [
+                {"role": "system", "content": "You are a helpful assistant that provides information about travel destinations..."},
                 {"role": "user", "content": "What are the best places to visit in Tokyo?"},
                 {"role": "assistant", "content": "Here are some great places..."},
                 {"role": "user", "content": "What about cultural sites?"},
@@ -63,22 +62,29 @@ class TestTravelGuidanceView:
         )
         mock_render.return_value = HttpResponse("Mocked template content")
         
-        # For Django forms, we need to send the JSON data as separate form fields
-        # The view uses getlist() which expects multiple fields with the same name
-        historical_messages = [
-            '{"role": "user", "content": "What are the best places to visit in Tokyo?"}',
-            '{"role": "assistant", "content": "Here are some great places..."}'
+        # Set up session with conversation history
+        session = client.session
+        session['conversation_history'] = [
+            {
+                'user_message': 'What are the best places to visit in Tokyo?',
+                'ai_response': 'Here are some great places...'
+            }
         ]
+        session.save()
         
         response = client.post('/', {
-            'user_message': 'What about cultural sites?',
-            'messages': historical_messages  # This will be processed by getlist()
+            'user_message': 'What about cultural sites?'
         })
         
         assert response.status_code == 200
         
-        # Verify service was called with conversation history as a list of JSON strings
-        mock_service.assert_called_once_with('What about cultural sites?', historical_messages)
+        # Verify service was called with proper message format including system message
+        expected_messages = [
+            {"role": "system", "content": SYSTEM_MESSAGE},
+            {"role": "user", "content": "What are the best places to visit in Tokyo?"},
+            {"role": "assistant", "content": "Here are some great places..."}
+        ]
+        mock_service.assert_called_once_with('What about cultural sites?', expected_messages)
         mock_render.assert_called_once()
     
     @patch('travel_app.views.render')
