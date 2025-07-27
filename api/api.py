@@ -34,6 +34,23 @@ def travel_guidance(request, data: TravelGuidanceRequest):
         
     Returns:
         TravelGuidanceResponse: AI response and updated message history.
+
+    EXAMPLE:
+        POST /travel-guidance/ (singleton)
+        {
+            "user_message": "What are the best places to visit in Tokyo?",
+            "messages": []
+        }
+                  
+        POST /travel-guidance/ (with conversation history)
+        {
+            "user_message": "What about cultural sites?",
+            "messages": [
+                {"role": "system", "content": "You are a helpful assistant that provides information about travel destinations..."},
+                {"role": "user", "content": "What are the best places to visit in Tokyo?"},
+                {"role": "assistant", "content": "Here are some great places..."}
+            ]
+        }
     """
     try:
         response, updated_messages = llm_service.get_travel_guidance(data.user_message, data.messages)
