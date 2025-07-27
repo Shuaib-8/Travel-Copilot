@@ -127,3 +127,29 @@ The Travel Copilot is designed to be user-friendly and intuitive. Here's a brief
 
 1. **Home Page**: When you first visit the app, you'll see a chat interface where you can start interacting with the Travel Copilot.
 
+![Travel Copilot Landing](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-landing.png)
+
+2. **Chat Interface**: You can type your travel-related queries into the input box and hit enter/button to submit. The Travel Copilot will respond with relevant information based on your query like so for the example query 'Tell me about Paris':
+
+![Travel Copilot Chat](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-one-shot-response.png)
+
+3. **Multi-turn Conversations**: You can continue the conversation by asking follow-up questions or providing more context. The Travel Copilot will maintain the context of the conversation within the session. An example of a multi-turn conversation is shown below where the user follows up with a question 'What about the restaurants' and the LLM responds with a relevant answer still in the context of Paris:
+
+![Travel Copilot follow up](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-follow-up-response.png)
+
+Again showing further the context awareness of the LLM with the follow-up about 'How much to buy a ticket to Paris?'
+
+![Travel Copilot Multi-Turn part 2](travel-copilot-multi-turn-response.png)
+
+4. **Resetting the Session**: If you want to start a new conversation, you can click the 'Reset' button to clear the current session. This will remove all previous messages and allow you to start fresh.
+
+![Travel Copilot Reset](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-reset-conversation.png)
+
+5. **Accessing the API Docs from the App**: You can find the API documentation by clicking on the 'API Docs' link in the app's navigation menu. This will provide you with detailed information about the available endpoints and how to use them.
+
+![Travel Copilot API Docs hyperlink](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-api-docs.png)
+
+6. **Swagger API Documentation**: The API documentation provides detailed information about the available endpoints, request parameters, and response formats. You can use this documentation to integrate the Travel Copilot into your own applications or services. The workhorse is the POST request via `/api/travel-guidance/` which takes a JSON payload with the user's query and returns a response from the LLM. A health check endpoint is also available at `/api/health/` to ensure the service is running correctly.
+
+![Travel Copilot Swagger API Docs](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-api-docs-swagger.png)
+
