@@ -19,6 +19,11 @@ dependencies = [
     "cohere>=0.7.0",
     "python-dotenv>=1.0.0",
     "markdown>=3.8.2",
+    "environs>=11.0.0",
+    "dj-database-url>=2.0.0",
+    "marshmallow>=3.13.0,<4.0.0",
+    "gunicorn>=20.1.0",
+    "whitenoise>=6.4.0",
 ]
 
 [project.optional-dependencies]
