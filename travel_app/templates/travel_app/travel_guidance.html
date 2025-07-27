@@ -61,10 +61,10 @@
 }
 </style>
 <!-- Main container with proper sizing -->
-<div class="bg-gray-500" style="height: 90vh; padding-top: 64px; padding-bottom: 140px; overflow: hidden;">
+<div class="bg-gray-500" style="height: 95vh; padding-top: 64px; padding-bottom: 120px; overflow: hidden;">
     <div class="max-w-6xl mx-auto p-4" style="height: 100%;">
         <!-- Chat Interface Container -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-400 flex flex-col" style="height: 75vh;">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-400 flex flex-col" style="height: 78vh;">
             <!-- Chat Messages Area -->
             <div class="flex-1 overflow-y-auto p-4" id="chat-messages" style="max-height: 100%; overflow-x: hidden;">
                 <!-- Chat Container for all conversations -->
@@ -125,12 +125,24 @@
 </div>
     
     <!-- Bottom Input Container - Fixed to bottom with centered content -->
-    <div class="input-container" style="position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem;" 
+    <div class="input-container" style="position: fixed; bottom: 0rem; left: 0; right: 0; padding: 3.5rem; transition: bottom 0.2s ease;" 
          x-data="{ 
              userMessage: '',
-             hasStartedConversation: {{ conversation_history|length|yesno:'true,false' }}
-         }">
-        <div style="max-width: 1000px; margin: 0 auto; border-radius: 1rem; overflow: hidden;">
+             hasStartedConversation: {{ conversation_history|length|yesno:'true,false' }},
+             adjustPosition() {
+                 const textarea = this.$refs.textarea;
+                 const container = this.$el;
+                 if (textarea && textarea.scrollHeight > 60) {
+                     // Move just slightly down when text is expanding
+                     container.style.bottom = '0.4rem';
+                 } else {
+                     // Move closer to chat when minimal text
+                     container.style.bottom = '-0.4rem';
+                 }
+             }
+         }"
+         x-init="adjustPosition()">
+        <div style="max-width: 1000px; margin: 0 auto; border-radius: 1rem; overflow: hidden; border: 2px solid #d1d5db; background-color: white;">
             <form method="post" 
                   hx-post="{% url 'travel-guidance' %}"
                   hx-target="#chat-messages .max-w-4xl"
@@ -178,17 +190,33 @@
                         x-ref="textarea"
                         @input="
                             $refs.textarea.style.height = 'auto';
-                            $refs.textarea.style.height = Math.min($refs.textarea.scrollHeight, 150) + 'px';
+                            $refs.textarea.style.height = Math.min($refs.textarea.scrollHeight, 120) + 'px';
+                            adjustPosition();
                         "
                         @keydown.enter.prevent="
                             if (!$event.shiftKey && userMessage.trim()) {
                                 $el.closest('form').requestSubmit();
                             } else if ($event.shiftKey) {
-                                $refs.textarea.style.height = 'auto';
-                                $refs.textarea.style.height = Math.min($refs.textarea.scrollHeight, 150) + 'px';
+                                // Allow line break with Shift+Enter
+                                $event.preventDefault();
+                                const textarea = $refs.textarea;
+                                const start = textarea.selectionStart;
+                                const end = textarea.selectionEnd;
+                                const value = textarea.value;
+                                
+                                // Insert line break at cursor position
+                                userMessage = value.substring(0, start) + '\n' + value.substring(end);
+                                
+                                // Update textarea and restore cursor position
+                                $nextTick(() => {
+                                    textarea.selectionStart = textarea.selectionEnd = start + 1;
+                                    textarea.style.height = 'auto';
+                                    textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+                                    adjustPosition();
+                                });
                             }
                         "
-                        style="padding-left: 60px; padding-right: 60px; min-height: 56px; max-height: 150px; font-size: 16px; width: 100%; line-height: 1.5; overflow-y: auto;"
+                        style="padding-left: 60px; padding-right: 60px; min-height: 56px; max-height: 120px; font-size: 16px; width: 100%; line-height: 1.5; overflow-y: auto; word-wrap: break-word; word-break: break-word; white-space: pre-wrap;"
                     ></textarea>
                     
                     <!-- Arrow Submit Button - Inside the input field -->
