@@ -9,6 +9,11 @@ ENV DJANGO_SETTINGS_MODULE=travel_copilot.settings
 # Set work directory
 WORKDIR /app
 
+# Install sqlite3 for database support
+RUN apt-get update && apt-get install -y \
+    sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install system dependencies including Node.js
 RUN apt-get update \
     && apt-get -y install g++ ca-certificates curl gnupg \
@@ -50,4 +55,4 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", ":8000", "travel_copilot.wsgi:application"]
