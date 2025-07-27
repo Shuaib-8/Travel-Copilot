@@ -78,30 +78,3 @@ def get_travel_guidance(user_message: str, messages: list = None) -> tuple[str, 
         error_msg = f"Error getting travel guidance: {str(e)}"
         # Return error message and empty conversation history
         return error_msg, [{"role": "system", "content": SYSTEM_MESSAGE}]
-
-# Test function (remove in production)
-def test_service():
-    """Test the travel advice service with both single and multi-turn conversations"""
-    print("=== Testing Single-Turn Conversation ===")
-    response1, history1 = get_travel_guidance("What are the top attractions in Paris?")
-    print(f"Response: {response1[:200]}...")
-    print(f"History length: {len(history1)} messages")
-    
-    print("\n=== Testing Multi-Turn Conversation ===")
-    # Start conversation
-    response2, history = get_travel_guidance("What are good places to visit in Japan?")
-    print(f"Turn 1: {response2[:150]}...")
-    
-    # Continue conversation with context
-    response3, history = get_travel_guidance("What about the food there?", history)
-    print(f"Turn 2: {response3[:150]}...")
-    
-    # Another follow-up
-    response4, history = get_travel_guidance("How much should I budget for a week?", history)
-    print(f"Turn 3: {response4[:150]}...")
-    
-    print(f"\nConversation has {len(history)} messages in total")
-
-if __name__ == "__main__":
-    # Only run test when script is executed directly
-    test_service()
