@@ -57,3 +57,7 @@ htmlcov/
 
 # Documentation
 README.md
+
+# fly deploy
+.fly/
+fly.toml
