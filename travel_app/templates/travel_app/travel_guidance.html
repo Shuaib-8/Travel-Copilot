@@ -125,7 +125,7 @@
 </div>
     
     <!-- Bottom Input Container - Fixed to bottom with centered content -->
-    <div class="input-container" style="position: fixed; bottom: 0rem; left: 0; right: 0; padding: 3.5rem; transition: bottom 0.2s ease;" 
+    <div class="input-container" style="position: fixed; bottom: 0rem; left: 0; right: 0; padding: 0 1.5rem; transition: bottom 0.2s ease;" 
          x-data="{ 
              userMessage: '',
              hasStartedConversation: {{ conversation_history|length|yesno:'true,false' }},
@@ -133,11 +133,11 @@
                  const textarea = this.$refs.textarea;
                  const container = this.$el;
                  if (textarea && textarea.scrollHeight > 60) {
-                     // Move just slightly down when text is expanding
+                     // Move higher when text is expanding to avoid overlap
                      container.style.bottom = '0.4rem';
                  } else {
-                     // Move closer to chat when minimal text
-                     container.style.bottom = '-0.4rem';
+                     // Lower position for minimal text - closer to bottom
+                     container.style.bottom = '1.5rem';
                  }
              }
          }"
