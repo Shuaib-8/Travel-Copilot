@@ -1,3 +1,5 @@
+{% load markdown_extras %}
+
 <!-- User Query Container - Left aligned -->
 <div style="display: flex; justify-content: flex-start; margin-bottom: 16px;">
     <div style="max-width: 70%; width: auto;">
@@ -23,8 +25,8 @@
         </div>
         <!-- AI response content -->
         <div style="background-color: #f9fafb; border: 2px solid #4b5563; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px; max-height: 400px; overflow-y: auto;">
-            <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
-                {{ ai_response }}
+            <div class="ai-response-content" style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                {{ ai_response|markdown }}
             </div>
         </div>
     </div>

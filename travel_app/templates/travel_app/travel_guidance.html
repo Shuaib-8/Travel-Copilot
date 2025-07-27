@@ -1,6 +1,65 @@
 {% extends 'base.html' %}
+{% load markdown_extras %}
 
 {% block content %}
+<style>
+/* Markdown content styling */
+.ai-response-content h1, .ai-response-content h2, .ai-response-content h3, 
+.ai-response-content h4, .ai-response-content h5, .ai-response-content h6 {
+    font-weight: 600;
+    margin: 1em 0 0.5em 0;
+    color: #1f2937;
+}
+
+.ai-response-content h1 { font-size: 1.5em; }
+.ai-response-content h2 { font-size: 1.3em; }
+.ai-response-content h3 { font-size: 1.1em; }
+
+.ai-response-content p {
+    margin: 0.75em 0;
+}
+
+.ai-response-content ul, .ai-response-content ol {
+    margin: 0.75em 0;
+    padding-left: 1.5em;
+}
+
+.ai-response-content li {
+    margin: 0.25em 0;
+}
+
+.ai-response-content strong {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.ai-response-content em {
+    font-style: italic;
+}
+
+.ai-response-content code {
+    background-color: #f3f4f6;
+    padding: 0.125em 0.25em;
+    border-radius: 0.25em;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.ai-response-content pre {
+    background-color: #f3f4f6;
+    padding: 1em;
+    border-radius: 0.5em;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.ai-response-content blockquote {
+    border-left: 4px solid #d1d5db;
+    padding-left: 1em;
+    margin: 1em 0;
+    font-style: italic;
+}
+</style>
 <!-- Main container with proper sizing -->
 <div class="bg-gray-500" style="height: 100vh; padding-top: 64px; padding-bottom: 140px; overflow: hidden;">
     <div class="max-w-6xl mx-auto p-4" style="height: 100%;">
@@ -38,8 +97,8 @@
                                 </div>
                                 <!-- AI response content -->
                                 <div style="background-color: #f9fafb; border: 2px solid #4b5563; border-top: 0; border-radius: 0 0 8px 8px; padding: 16px; max-height: 400px; overflow-y: auto;">
-                                    <div style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
-                                        {{ conversation.ai_response }}
+                                    <div class="ai-response-content" style="color: #374151; line-height: 1.6; font-size: 14px; word-break: break-word; overflow-wrap: break-word;">
+                                        {{ conversation.ai_response|markdown }}
                                     </div>
                                 </div>
                             </div>
