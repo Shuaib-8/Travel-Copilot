@@ -61,7 +61,7 @@
 }
 </style>
 <!-- Main container with proper sizing -->
-<div class="bg-gray-500" style="height: 95vh; padding-top: 64px; padding-bottom: 120px; overflow: hidden;">
+<div class="bg-white" style="height: 95vh; padding-top: 64px; padding-bottom: 120px; overflow: hidden;">
     <div class="max-w-6xl mx-auto p-4" style="height: 100%;">
         <!-- Chat Interface Container -->
         <div class="bg-white rounded-2xl shadow-lg border border-gray-400 flex flex-col" style="height: 78vh;">
@@ -142,7 +142,7 @@
              }
          }"
          x-init="adjustPosition()">
-        <div style="max-width: 1000px; margin: 0 auto; border-radius: 1rem; overflow: hidden; border: 2px solid #d1d5db; background-color: white;">
+        <div style="max-width: 1000px; margin: 0 auto; border-radius: 1.5rem; border: 1px solid #d1d5db; background-color: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
             <form method="post" 
                   hx-post="{% url 'travel-guidance' %}"
                   hx-target="#chat-messages .max-w-4xl"
@@ -184,7 +184,7 @@
                         name="user_message"
                         x-model="userMessage"
                         placeholder="Enter Text to Travel bot ..."
-                        class="w-full px-6 py-4 text-lg font-medium rounded-3xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500 bg-white hover:border-gray-400 transition-all duration-200 shadow-sm placeholder-gray-500 resize-none"
+                        class="w-full px-6 py-4 text-lg font-medium bg-transparent border-none focus:outline-none placeholder-gray-500 resize-none"
                         required
                         rows="1"
                         x-ref="textarea"
@@ -216,7 +216,7 @@
                                 });
                             }
                         "
-                        style="padding-left: 60px; padding-right: 60px; min-height: 56px; max-height: 120px; font-size: 16px; width: 100%; line-height: 1.5; overflow-y: auto; word-wrap: break-word; word-break: break-word; white-space: pre-wrap;"
+                        style="padding-left: 60px; padding-right: 60px; min-height: 56px; max-height: 120px; font-size: 16px; width: 100%; line-height: 1.5; overflow-y: auto; word-wrap: break-word; word-break: break-word; white-space: pre-wrap; border: none; outline: none; box-shadow: none; background: transparent;"
                     ></textarea>
                     
                     <!-- Arrow Submit Button - Inside the input field -->
