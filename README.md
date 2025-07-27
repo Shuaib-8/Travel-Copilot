@@ -28,6 +28,7 @@ The inital draft of the project has the following requirements:
 - **Backend**: Django Ninja API framework for building the backend services.
 - **Frontend**: A combination of Tailwind CSS, Alpine.js, and HTMX for a responsive and interactive user interface.
 - **LLM**: Cohere's LLM for generating travel-related responses.
+- **Testing**: Pytest/pytest-django for automated testing of the application.
 
 ## Future Considerations 
 
@@ -112,8 +113,17 @@ $ pytest .
 
 ### Deployment
 
-My deployment strategy for this django based full stack application is to use Fly.io for hosting the Travel Copilot. 
+My deployment strategy for this django based full stack application is to use [Fly.io](https://fly.io/) for hosting the Travel Copilot. 
 
 It can be accessed at [https://drf-fs-travel-copilot-polished-grass-5647.fly.dev/](https://drf-fs-travel-copilot-polished-grass-5647.fly.dev/).
 
 If there are any issues accessing the deployed app please email me at [shuaib.ahmed45@gmail.com](mailto:shuaib.ahmed45@gmail.com).
+
+Also consider whether Cohere LLM service is down or not, as this can affect the app's functionality. This is visiible via the Cohere Status Checker: [https://status.cohere.com/](https://status.cohere.com/).
+
+### Walkthrough of the App
+
+The Travel Copilot is designed to be user-friendly and intuitive. Here's a brief walkthrough.
+
+1. **Home Page**: When you first visit the app, you'll see a chat interface where you can start interacting with the Travel Copilot.
+
