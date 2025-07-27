@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch, Mock
 from core.llm_service import get_travel_guidance, SYSTEM_MESSAGE
 

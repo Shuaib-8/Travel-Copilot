@@ -32,7 +32,6 @@ class TravelGuidanceView(View):
         
         if conversation_history:
             # Convert session history to proper message format for LLM
-            from core.llm_service import SYSTEM_MESSAGE
             messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
             
             for conversation in conversation_history:

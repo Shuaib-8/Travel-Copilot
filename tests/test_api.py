@@ -1,6 +1,5 @@
 import pytest
 import json
-from unittest.mock import patch, Mock
 from api.api import api, TravelGuidanceRequest, TravelGuidanceResponse 
 
 
