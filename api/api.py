@@ -27,7 +27,10 @@ api = NinjaAPI(
 @api.post("/travel-guidance/", response=TravelGuidanceResponse)
 def travel_guidance(request, data: TravelGuidanceRequest):
     """
-    Endpoint to get travel guidance from the LLM service.
+    Endpoint to get travel guidance from the LLM service. Text responses are generated based on user input 
+    and returned along with the updated conversation history. Returned text is raw and unformatted (markdown).
+    Please note that this endpoint is designed to be a singleton, meaning it does not support multiple concurrent requests 
+    as it maintains a single conversation state.
     
     Args:
         data: TravelGuidanceRequest containing user_message and optional messages history
@@ -35,7 +38,9 @@ def travel_guidance(request, data: TravelGuidanceRequest):
     Returns:
         TravelGuidanceResponse: AI response and updated message history.
 
-    EXAMPLE:
+    ```
+    EXAMPLES:
+    
         POST /travel-guidance/ (singleton)
         {
             "user_message": "What are the best places to visit in Tokyo?",
@@ -51,6 +56,7 @@ def travel_guidance(request, data: TravelGuidanceRequest):
                 {"role": "assistant", "content": "Here are some great places..."}
             ]
         }
+    ```
     """
     try:
         response, updated_messages = llm_service.get_travel_guidance(data.user_message, data.messages)
