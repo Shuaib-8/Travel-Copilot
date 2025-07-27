@@ -16,12 +16,12 @@ RUN apt-get update \
     && apt-get install -y nodejs \
     && apt-get clean
 
-# Install Python dependencies first
-COPY requirements.txt /app/ 
-COPY requirements-dev.txt /app/
+# Install Python dependencies
+# Copy project files needed for pip install
+COPY ./pyproject.toml /app/
+COPY ./core/ /app/core/
 RUN pip install --no-cache-dir --upgrade pip \
-        && pip install --no-cache-dir -r requirements.txt \
-        && pip install --no-cache-dir -r requirements-dev.txt
+    && pip install --no-cache-dir -e ".[dev]"
 
 # Copy package files for Node.js dependencies
 COPY package.json package-lock.json /app/
