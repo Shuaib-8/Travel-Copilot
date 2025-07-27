@@ -1,8 +1,3 @@
-"""
-Main API router for Django Ninja.
-This file configures all API endpoints and routes.
-"""
-
 from typing import List, Optional
 from ninja import NinjaAPI, Schema
 from core import llm_service
@@ -40,7 +35,7 @@ def travel_guidance(request, data: TravelGuidanceRequest):
 
     ```
     EXAMPLES:
-    
+
         POST /travel-guidance/ (singleton)
         {
             "user_message": "What are the best places to visit in Tokyo?",
