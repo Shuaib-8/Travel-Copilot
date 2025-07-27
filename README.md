@@ -1,9 +1,20 @@
 # Travel Copilot
 
+![alt text](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra%20/travel-copilot-design.png)
+
 ## Overview
 
-The Travel Copilot is an AI-powered assistant designed to help users explore and ideate around travel plans. By leveraging LLMs, the Travel Copilot can understand user preferences, provide personalized recommendations, and assist with various travel-related tasks over a Question-Answering (QA) chat interface. 
+The Travel Copilot is an AI-powered assistant designed to help users explore and ideate around travel plans. By leveraging the **Cohere LLM**, the Travel Copilot can understand user preferences, provide personalized recommendations (travel guidance), and assist with various travel-related tasks over a Question-Answering (QA) chat interface. 
 
+## Design & Requirements
+
+The inital draft of the project has the following requirements:
+
+- Chat interface - A user can submit an input query and receive a response from the LLM in the Chat interface UI.
+- Threaded conversations - In the main the chat interface is a thread of discussion between the user and the LLM. User query is labelled on top followed by a LLM response with the generated text. The LLM is grounded to have multi-turn style discussions, being context aware.
+- Reset - Users can discard the session as they please by scrolling and excuting to the 'Reset' button
+- API integration (optional) - There's a chance to navigate to the API docs to potentially integrate more specialised workflows to respond to the LLM, however with the caveat that these conversations aren't stateful, and no memory management is considered as in the frontend
+- LLM Grounding and Safety - The LLM is designed to only provide and respond to questions around travel guidance. Anything outside its realm it should decline to respond
 
 ## Features
 
@@ -24,5 +35,4 @@ The Travel Copilot is an AI-powered assistant designed to help users explore and
 - **Persistent storage**: Using a production database such as PostgreSQL to store user preferences, past interactions, and other relevant data.
 - **Asynchronous processing**: Use of Cohere's Async client to handle long-running tasks and improve responsiveness.
 
-## Design 
 
