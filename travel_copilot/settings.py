@@ -10,10 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Only load .env file if it exists and we're not in a containerized environment
+env_path = BASE_DIR / '.env'
+if env_path.exists() and not os.getenv('DOCKER_CONTAINER'):
+    load_dotenv(dotenv_path=env_path)
+
+# Set default API key for build/migration scenarios
+if not os.getenv('COHERE_API_KEY'):
+    os.environ['COHERE_API_KEY'] = 'build-dummy-key-for-migrations'
 
 
 # Quick-start development settings - unsuitable for production
