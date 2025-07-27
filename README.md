@@ -1,6 +1,6 @@
 # Travel Copilot
 
-![alt text](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-design.png)
+![Travel Copilot Design](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-design.png)
 
 ## Overview
 
@@ -36,3 +36,84 @@ The inital draft of the project has the following requirements:
 - **Asynchronous processing**: Use of Cohere's Async client to handle long-running tasks and improve responsiveness.
 
 
+## Installation and Setup
+
+To proceed with the installation and setup of the Travel Copilot, follow these steps:
+- COHERE API Key: [Sign up for a Cohere account and obtain an API key](https://dashboard.cohere.com/api-keys). Set the `COHERE_API_KEY` environment variable with your key e.g. `export COHERE_API_KEY=your_api_key` or setup a `.env` file in the root of the project like so:
+
+```env
+# .env file
+COHERE_API_KEY=your_api_key
+```
+
+### Local Development
+
+Clone the repository and install the dependencies:
+
+```bash
+$ git clone https://github.com/Shuaib-8/Travel-Copilot.git
+$ cd travel-copilot
+$ pip install -r requirements.txt
+```
+Then run the migrations and start the development server:
+
+```bash
+$ python manage.py makemigrations
+$ python manage.py migrate
+$ python manage.py runserver
+```
+
+You can now access the Travel Copilot at `http://localhost:8000`.
+
+If you want to run the test suite, you can do so with:
+
+```bash
+$ pip install -r requirements-dev.txt  # Install development dependencies
+$ pytest .
+```
+
+An example of test suite output:
+
+```
+$ pytest . 
+=================================================================================== test session starts ===================================================================================
+platform linux -- Python 3.13.5, pytest-8.4.1, pluggy-1.6.0
+django: version: 5.1.2, settings: travel_copilot.settings (from env)
+rootdir: /app
+configfile: pyproject.toml
+plugins: django-4.11.1, cov-6.2.1, anyio-4.9.0
+collected 20 items                                                                                                                                                                        
+
+tests/test_api.py ...........                                                                                                                                                       [ 55%]
+tests/test_views.py ....                                                                                                                                                            [ 75%]
+tests/test_llm_service.py .....                                                                                                                                                     [100%]
+============================================================================= 20 passed, 3 warnings in 0.25s ==============================================================================
+```
+
+### Docker Setup
+
+To run the Travel Copilot using Docker, ensure you have Docker installed on your machine. Then, build and run the Docker container:
+
+```bash
+$ docker build -t travel-copilot .
+# Ensure you have a .env file in the root directory with your COHERE_API_KEY
+$ docker run -p 8000:8000 --env-file .env travel-copilot
+``` 
+
+You can now access the Travel Copilot at http://localhost:8000.
+
+If you want to run the test suite in Docker, you can do so with:
+
+```bash
+# You can find the container ID with `docker ps`
+$ docker exec -it <CONTAINER_ID> bash
+$ pytest .
+```
+
+### Deployment
+
+My deployment strategy for this django based full stack application is to use Fly.io for hosting the Travel Copilot. 
+
+It can be accessed at [https://drf-fs-travel-copilot-polished-grass-5647.fly.dev/](https://drf-fs-travel-copilot-polished-grass-5647.fly.dev/).
+
+If there are any issues accessing the deployed app please email me at [shuaib.ahmed45@gmail.com](mailto:shuaib.ahmed45@gmail.com).
