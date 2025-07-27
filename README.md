@@ -139,7 +139,7 @@ The Travel Copilot is designed to be user-friendly and intuitive. Here's a brief
 
 Again showing further the context awareness of the LLM with the follow-up about 'How much to buy a ticket to Paris?'
 
-![Travel Copilot Multi-Turn part 2](travel-copilot-multi-turn-response.png)
+![Travel Copilot Multi-Turn part 2](https://github.com/Shuaib-8/Travel-Copilot/blob/main/extra/travel-copilot-multi-turn-response.png)
 
 4. **Resetting the Session**: If you want to start a new conversation, you can click the 'Reset' button to clear the current session. This will remove all previous messages and allow you to start fresh.
 
