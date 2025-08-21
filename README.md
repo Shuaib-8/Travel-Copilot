@@ -44,7 +44,8 @@ To proceed with the installation and setup of the Travel Copilot, follow these s
 
 ```env
 # .env file
-COHERE_API_KEY=your_api_key
+COHERE_API_KEY=<INPUT_YOUR_COHERE_API_KEY_HERE>
+DEBUG=True
 ```
 
 ### Local Development
@@ -53,8 +54,10 @@ Clone the repository and install the dependencies:
 
 ```bash
 $ git clone https://github.com/Shuaib-8/Travel-Copilot.git
-$ cd travel-copilot
-$ pip install -r requirements.txt
+$ cd Travel-Copilot
+$ python -m venv .venv  # Create a virtual environment
+$ source .venv/bin/activate  # Activate the virtual environment
+$ pip install --upgrade pip && pip install -e . &&  pip install -r requirements.txt # Install the required packages
 ```
 Then run the migrations and start the development server:
 
